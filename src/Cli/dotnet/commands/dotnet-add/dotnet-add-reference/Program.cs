@@ -21,7 +21,7 @@ namespace Microsoft.DotNet.Tools.Add.ProjectToProjectReference
 
         public AddProjectToProjectReferenceCommand(ParseResult parseResult) : base(parseResult)
         {
-            _fileOrDirectory = parseResult.ValueForArgument<string>(AddCommandParser.ProjectArgument);
+            _fileOrDirectory = parseResult.GetValueForArgument<string>(AddCommandParser.ProjectArgument);
         }
 
         public override int Execute()
@@ -33,9 +33,9 @@ namespace Microsoft.DotNet.Tools.Add.ProjectToProjectReference
                 _fileOrDirectory,
                 interactive);
 
-            var frameworkString = _parseResult.ValueForOption<string>(AddProjectToProjectReferenceParser.FrameworkOption);
+            var frameworkString = _parseResult.GetValueForOption<string>(AddProjectToProjectReferenceParser.FrameworkOption);
 
-            var arguments = _parseResult.ValueForArgument<IEnumerable<string>>(AddProjectToProjectReferenceParser.ProjectPathArgument).ToList().AsReadOnly();
+            var arguments = _parseResult.GetValueForArgument<IEnumerable<string>>(AddProjectToProjectReferenceParser.ProjectPathArgument).ToList().AsReadOnly();
             PathUtility.EnsureAllPathsExist(arguments,
                 CommonLocalizableStrings.CouldNotFindProjectOrDirectory, true);
             List<MsbuildProject> refs =

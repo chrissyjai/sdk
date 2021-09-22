@@ -29,10 +29,10 @@ namespace Microsoft.DotNet.Workloads.Workload.Search
             string version = null) : base(result)
         {
             _reporter = reporter ?? Reporter.Output;
-            _verbosity = result.ValueForOption<VerbosityOptions>(WorkloadSearchCommandParser.VerbosityOption);
-            _workloadIdStub = result.ValueForArgument<string>(WorkloadSearchCommandParser.WorkloadIdStubArgument);
+            _verbosity = result.GetValueForOption<VerbosityOptions>(WorkloadSearchCommandParser.VerbosityOption);
+            _workloadIdStub = result.GetValueForArgument<string>(WorkloadSearchCommandParser.WorkloadIdStubArgument);
             var dotnetPath = Path.GetDirectoryName(Environment.ProcessPath);
-            _sdkVersion = WorkloadOptionsExtensions.GetValidatedSdkVersion(result.ValueForOption<string>(WorkloadSearchCommandParser.VersionOption), version, dotnetPath);
+            _sdkVersion = WorkloadOptionsExtensions.GetValidatedSdkVersion(result.GetValueForOption<string>(WorkloadSearchCommandParser.VersionOption), version, dotnetPath);
             var workloadManifestProvider = new SdkDirectoryWorkloadManifestProvider(dotnetPath, _sdkVersion.ToString());
             _workloadResolver = workloadResolver ?? WorkloadResolver.Create(workloadManifestProvider, dotnetPath, _sdkVersion.ToString());
         }

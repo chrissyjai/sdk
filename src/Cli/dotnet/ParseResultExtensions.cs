@@ -116,17 +116,17 @@ namespace Microsoft.DotNet.Cli
         internal static string GetCommandLineRuntimeIdentifier(this ParseResult parseResult)
         {
             return parseResult.HasOption(RunCommandParser.RuntimeOption) ?
-                parseResult.ValueForOption<string>(RunCommandParser.RuntimeOption) :
+                parseResult.GetValueForOption<string>(RunCommandParser.RuntimeOption) :
                 parseResult.HasOption(CommonOptions.OperatingSystemOption.Aliases.First()) || parseResult.HasOption(CommonOptions.ArchitectureOption().Aliases.First()) ?
                 CommonOptions.ResolveRidShorthandOptionsToRuntimeIdentifier(
-                    parseResult.ValueForOption<string>(CommonOptions.OperatingSystemOption.Aliases.First()),
-                    parseResult.ValueForOption<string>(CommonOptions.ArchitectureOption().Aliases.First())) :
+                    parseResult.GetValueForOption<string>(CommonOptions.OperatingSystemOption.Aliases.First()),
+                    parseResult.GetValueForOption<string>(CommonOptions.ArchitectureOption().Aliases.First())) :
                 null;
         }
 
         public static bool UsingRunCommandShorthandProjectOption(this ParseResult parseResult)
         {
-            if (parseResult.HasOption(RunCommandParser.PropertyOption) && parseResult.ValueForOption(RunCommandParser.PropertyOption).Any())
+            if (parseResult.HasOption(RunCommandParser.PropertyOption) && parseResult.GetValueForOption(RunCommandParser.PropertyOption).Any())
             {
                 var projVals = parseResult.GetRunCommandShorthandProjectValues();
                 if (projVals.Any())
@@ -143,13 +143,13 @@ namespace Microsoft.DotNet.Cli
 
         public static IEnumerable<string> GetRunCommandShorthandProjectValues(this ParseResult parseResult)
         {
-            var properties = parseResult.ValueForOption(RunCommandParser.PropertyOption);
+            var properties = parseResult.GetValueForOption(RunCommandParser.PropertyOption);
             return properties.Where(property => !property.Contains("="));
         }
 
         public static IEnumerable<string> GetRunCommandShorthandPropertyValues(this ParseResult parseResult)
         {
-            var properties = parseResult.ValueForOption(RunCommandParser.PropertyOption);
+            var properties = parseResult.GetValueForOption(RunCommandParser.PropertyOption);
             return properties.Where(property => property.Contains("="));
         }
 

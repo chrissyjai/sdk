@@ -32,10 +32,10 @@ namespace Microsoft.DotNet.Tools.Tool.Install
                 toolInstallGlobalOrToolPathCommand
                 ?? new ToolInstallGlobalOrToolPathCommand(_parseResult);
 
-            _global = parseResult.ValueForOption<bool>(ToolAppliedOption.GlobalOptionAliases.First());
-            _local = parseResult.ValueForOption<bool>(ToolAppliedOption.LocalOptionAlias);
-            _toolPath = parseResult.ValueForOption<string>(ToolAppliedOption.ToolPathOptionAlias);
-            _framework = parseResult.ValueForOption<string>(ToolInstallCommandParser.FrameworkOption);
+            _global = parseResult.GetValueForOption<bool>(ToolAppliedOption.GlobalOptionAliases.First());
+            _local = parseResult.GetValueForOption<bool>(ToolAppliedOption.LocalOptionAlias);
+            _toolPath = parseResult.GetValueForOption<string>(ToolAppliedOption.ToolPathOptionAlias);
+            _framework = parseResult.GetValueForOption<string>(ToolInstallCommandParser.FrameworkOption);
         }
 
         public override int Execute()

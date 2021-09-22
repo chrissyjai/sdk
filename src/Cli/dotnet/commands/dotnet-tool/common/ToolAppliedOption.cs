@@ -46,7 +46,7 @@ namespace Microsoft.DotNet.Tools.Tool.Common
                 options.Add(LocalOptionAlias.Trim('-'));
             }
 
-            if (!String.IsNullOrWhiteSpace(parseResult.ValueForOption<string>(ToolPathOptionAlias)))
+            if (!String.IsNullOrWhiteSpace(parseResult.GetValueForOption<string>(ToolPathOptionAlias)))
             {
                 options.Add(ToolPathOptionAlias.Trim('-'));
             }
@@ -64,7 +64,7 @@ namespace Microsoft.DotNet.Tools.Tool.Common
         internal static void EnsureToolManifestAndOnlyLocalFlagCombination(ParseResult parseResult)
         {
             if (GlobalOrToolPath(parseResult) &&
-                !string.IsNullOrWhiteSpace(parseResult.ValueForOption<string>(ToolManifestOptionAlias)))
+                !string.IsNullOrWhiteSpace(parseResult.GetValueForOption<string>(ToolManifestOptionAlias)))
             {
                 throw new GracefulException(
                     string.Format(
@@ -75,7 +75,7 @@ namespace Microsoft.DotNet.Tools.Tool.Common
         private static bool GlobalOrToolPath(ParseResult parseResult)
         {
             return parseResult.HasOption(GlobalOptionAliases.First()) ||
-                   !string.IsNullOrWhiteSpace(parseResult.ValueForOption<string>(ToolPathOptionAlias));
+                   !string.IsNullOrWhiteSpace(parseResult.GetValueForOption<string>(ToolPathOptionAlias));
         }
     }
 }

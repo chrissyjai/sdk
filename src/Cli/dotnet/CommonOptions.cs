@@ -161,7 +161,7 @@ namespace Microsoft.DotNet.Cli
             var selfContainedSpecified = parseResult.HasOption(SelfContainedOption.Aliases.First()) || parseResult.HasOption(NoSelfContainedOption.Aliases.First());
             if (parseResult.BothArchAndOsOptionsSpecified())
             {
-                return ResolveRidShorthandOptions(arg, parseResult.ValueForOption<string>(CommonOptions.ArchitectureOption().Aliases.First()), selfContainedSpecified);
+                return ResolveRidShorthandOptions(arg, parseResult.GetValueForOption<string>(CommonOptions.ArchitectureOption().Aliases.First()), selfContainedSpecified);
             }
 
             return ResolveRidShorthandOptions(arg, null, selfContainedSpecified);
