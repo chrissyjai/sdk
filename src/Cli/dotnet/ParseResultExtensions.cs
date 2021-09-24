@@ -119,8 +119,8 @@ namespace Microsoft.DotNet.Cli
                 parseResult.GetValueForOption<string>(RunCommandParser.RuntimeOption) :
                 parseResult.HasOption(CommonOptions.OperatingSystemOption.Aliases.First()) || parseResult.HasOption(CommonOptions.ArchitectureOption().Aliases.First()) ?
                 CommonOptions.ResolveRidShorthandOptionsToRuntimeIdentifier(
-                    parseResult.GetValueForOption<string>(CommonOptions.OperatingSystemOption.Aliases.First()),
-                    parseResult.GetValueForOption<string>(CommonOptions.ArchitectureOption().Aliases.First())) :
+                    parseResult.ValueForOption<string>(CommonOptions.OperatingSystemOption.Aliases.First()),
+                    parseResult.ValueForOption<string>(CommonOptions.ArchitectureOption().Aliases.First())) :
                 null;
         }
 

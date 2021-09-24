@@ -106,9 +106,23 @@ namespace Microsoft.DotNet.Cli
 
         public static Option<bool> DebugOption = new Option<bool>("--debug");
 
+        private static ParseArgument<bool> SelfContainedParseArgument = (argResult) =>
+        {
+            var noSelfContainedOptionValue = argResult.FindResultFor(SelfContainedOption).GetValueOrDefault<bool>();
+            var selfContainedOptionValue = argResult.GetValueOrDefault<bool>();
+
+            if (noSelfContainedOptionValue && selfContainedOptionValue)
+            {
+                throw new GracefulException(CommonLocalizableStrings.SelfContainAndNoSelfContainedConflict);
+            }
+
+            return selfContainedOptionValue;
+        };
+
         public static Option<bool> SelfContainedOption =
             new ForwardedOption<bool>(
                 "--self-contained",
+                SelfContainedParseArgument,
                 CommonLocalizableStrings.SelfContainedOptionDescription)
             .ForwardAsMany(o => new string[] { $"-property:SelfContained={o}", "-property:_CommandLineDefinedSelfContained=true" });
 
@@ -118,6 +132,13 @@ namespace Microsoft.DotNet.Cli
                 CommonLocalizableStrings.FrameworkDependentOptionDescription)
             .ForwardAsMany(o => new string[] { "-property:SelfContained=false", "-property:_CommandLineDefinedSelfContained=true" });
 
+        public static readonly Option TestPlatformOption = new Option<string>("--Platform");
+
+
+        public static readonly Option TestFrameworkOption = new Option<string>("--Framework");
+
+        public static readonly Option TestLoggerOption = new Option<string>("--logger");
+
         public static bool VerbosityIsDetailedOrDiagnostic(this VerbosityOptions verbosity)
         {
             return verbosity.Equals(VerbosityOptions.diag) ||
@@ -126,13 +147,13 @@ namespace Microsoft.DotNet.Cli
                 verbosity.Equals(VerbosityOptions.detailed);
         }
 
-        public static void ValidateSelfContainedOptions(bool hasSelfContainedOption, bool hasNoSelfContainedOption)
-        {
-            if (hasSelfContainedOption && hasNoSelfContainedOption)
-            {
-                throw new GracefulException(CommonLocalizableStrings.SelfContainAndNoSelfContainedConflict);
-            }
-        }
+        //public static void ValidateSelfContainedOptions(bool hasSelfContainedOption, bool hasNoSelfContainedOption)
+        //{
+        //    if (hasSelfContainedOption && hasNoSelfContainedOption)
+        //    {
+        //        throw new GracefulException(CommonLocalizableStrings.SelfContainAndNoSelfContainedConflict);
+        //    }
+        //}
 
         internal static IEnumerable<string> ResolveArchOptionToRuntimeIdentifier(string arg, ParseResult parseResult)
         {
@@ -161,7 +182,7 @@ namespace Microsoft.DotNet.Cli
             var selfContainedSpecified = parseResult.HasOption(SelfContainedOption.Aliases.First()) || parseResult.HasOption(NoSelfContainedOption.Aliases.First());
             if (parseResult.BothArchAndOsOptionsSpecified())
             {
-                return ResolveRidShorthandOptions(arg, parseResult.GetValueForOption<string>(CommonOptions.ArchitectureOption().Aliases.First()), selfContainedSpecified);
+                return ResolveRidShorthandOptions(arg, parseResult.ValueForOption<string>(CommonOptions.ArchitectureOption().Aliases.First()), selfContainedSpecified);
             }
 
             return ResolveRidShorthandOptions(arg, null, selfContainedSpecified);

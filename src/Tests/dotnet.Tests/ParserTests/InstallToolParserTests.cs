@@ -78,7 +78,7 @@ namespace Microsoft.DotNet.Tests.ParserTests
         {
             var result = Parser.Instance.Parse("dotnet tool install -g console.test.app");
 
-            result.GetValueForOption<bool>(ToolAppliedOption.GlobalOptionAliases.First()).Should().Be(true);
+            result.ValueForOption<bool>(ToolAppliedOption.GlobalOptionAliases.First()).Should().Be(true);
         }
         
         [Fact]
@@ -86,7 +86,7 @@ namespace Microsoft.DotNet.Tests.ParserTests
         {
             var result = Parser.Instance.Parse("dotnet tool install --local console.test.app");
 
-            result.GetValueForOption<bool>(ToolAppliedOption.LocalOptionAlias).Should().Be(true);
+            result.ValueForOption<bool>(ToolAppliedOption.LocalOptionAlias).Should().Be(true);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace Microsoft.DotNet.Tests.ParserTests
                 Parser.Instance.Parse(
                     "dotnet tool install --local console.test.app --tool-manifest folder/my-manifest.format");
 
-            result.GetValueForOption<string>(ToolAppliedOption.ToolManifestOptionAlias).Should().Be("folder/my-manifest.format");
+            result.ValueForOption<string>(ToolAppliedOption.ToolManifestOptionAlias).Should().Be("folder/my-manifest.format");
         }
 
         [Fact]
@@ -115,7 +115,7 @@ namespace Microsoft.DotNet.Tests.ParserTests
             var result =
                 Parser.Instance.Parse(@"dotnet tool install --tool-path C:\Tools console.test.app");
 
-            result.GetValueForOption<string>(ToolAppliedOption.ToolPathOptionAlias).Should().Be(@"C:\Tools");
+            result.ValueForOption<string>(ToolAppliedOption.ToolPathOptionAlias).Should().Be(@"C:\Tools");
         }
 
         [Fact]

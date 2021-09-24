@@ -139,10 +139,6 @@ namespace Microsoft.DotNet.Cli
                     CommandLineInfo.PrintInfo();
                     return 0;
                 }
-                else if (parseResult.Directives.Count() > 0) // TODO needed?
-                {
-                    return parseResult.Invoke();
-                }
                 else
                 {
                     PerformanceLogEventSource.Log.FirstTimeConfigurationStart();

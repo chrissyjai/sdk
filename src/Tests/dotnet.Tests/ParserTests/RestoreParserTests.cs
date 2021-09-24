@@ -49,7 +49,7 @@ namespace Microsoft.DotNet.Tests.CommandLineParserTests
 
             restore.GetValueForArgument<IEnumerable<string>>(RestoreCommandParser.SlnOrProjectArgument);
 
-            restore.GetValueForOption<IEnumerable<string>>("--source")
+            restore.ValueForOption<IEnumerable<string>>("--source")
                 .Should()
                 .BeEquivalentTo(
                     "https://dotnet.myget.org/F/dotnet-buildtools/api/v3/index.json",

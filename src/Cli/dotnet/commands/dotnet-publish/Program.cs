@@ -37,8 +37,8 @@ namespace Microsoft.DotNet.Tools.Publish
 
             msbuildArgs.Add("-target:Publish");
 
-            CommonOptions.ValidateSelfContainedOptions(parseResult.HasOption(PublishCommandParser.SelfContainedOption),
-                parseResult.HasOption(PublishCommandParser.NoSelfContainedOption));
+            //CommonOptions.ValidateSelfContainedOptions(parseResult.HasOption(PublishCommandParser.SelfContainedOption),
+            //    parseResult.HasOption(PublishCommandParser.NoSelfContainedOption));
 
             msbuildArgs.AddRange(parseResult.OptionValuesToBeForwarded(PublishCommandParser.GetCommand()));
 

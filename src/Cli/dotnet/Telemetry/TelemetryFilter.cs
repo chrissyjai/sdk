@@ -97,12 +97,16 @@ namespace Microsoft.DotNet.Cli.Telemetry
             new TopLevelCommandNameAndOptionToLog
             (
                 topLevelCommandName: new HashSet<string> {"build", "publish"},
-                optionsToLog: new HashSet<Option> {"framework", "runtime", "configuration"}
+                optionsToLog: new HashSet<Option> { BuildCommandParser.FrameworkOption, PublishCommandParser.FrameworkOption,
+                    BuildCommandParser.RuntimeOption, PublishCommandParser.RuntimeOption, BuildCommandParser.ConfigurationOption,
+                    PublishCommandParser.ConfigurationOption }
             ),
             new TopLevelCommandNameAndOptionToLog
             (
                 topLevelCommandName: new HashSet<string> {"run", "clean", "test"},
-                optionsToLog: new HashSet<Option> {"framework", "configuration"}
+                optionsToLog: new HashSet<Option> { RunCommandParser.FrameworkOption, CleanCommandParser.FrameworkOption,
+                    TestCommandParser.FrameworkOption, RunCommandParser.ConfigurationOption, CleanCommandParser.ConfigurationOption,
+                    TestCommandParser.ConfigurationOption }
             ),
             new TopLevelCommandNameAndOptionToLog
             (
@@ -112,12 +116,13 @@ namespace Microsoft.DotNet.Cli.Telemetry
             new TopLevelCommandNameAndOptionToLog
             (
                 topLevelCommandName: new HashSet<string> {"vstest"},
-                optionsToLog: new HashSet<Option> { "platform", "framework", "logger"}
+                optionsToLog: new HashSet<Option> { CommonOptions.TestPlatformOption,
+                    CommonOptions.TestFrameworkOption, CommonOptions.TestLoggerOption }
             ),
             new TopLevelCommandNameAndOptionToLog
             (
                 topLevelCommandName: new HashSet<string> {"publish"},
-                optionsToLog: new HashSet<Option> {"runtime"}
+                optionsToLog: new HashSet<Option> { PublishCommandParser.RuntimeOption }
             ),
             new AllowListToSendVerbSecondVerbFirstArgument(new HashSet<string> {"workload", "tool"}),
         };
@@ -135,7 +140,7 @@ namespace Microsoft.DotNet.Cli.Telemetry
                     new Dictionary<string, string>()
                     {
                         { "verb", topLevelCommandName},
-                        {"verbosity", Enum.GetName(parseResult.GetValueForOption<VerbosityOptions>("--verbosity"))}
+                        {"verbosity", Enum.GetName(parseResult.GetValueForOption(CommonOptions.VerbosityOption))}
                     },
                     measurements));
             }
